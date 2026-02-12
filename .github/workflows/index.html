@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP1 Prüfungsvorbereitung 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .countdown {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .countdown h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .countdown-unit {
+            text-align: center;
+        }
+
+        .countdown-value {
+            font-size: 4rem;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .topic-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .topic-code {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .relevance-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .relevance-sehr-hoch {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .relevance-hoch {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .relevance-mittel {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .topic-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .answer-option {
+            padding: 15px;
+            background: #f0f0f0;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .answer-option:hover {
+            background: #e0e0e0;
+        }
+
+        .answer-option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .answer-option.correct {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .answer-option.incorrect {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .explanation {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .close-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .countdown-display {
+                font-size: 2rem;
+            }
+            
+            .countdown-value {
+                font-size: 2.5rem;
+            }
+            
+            .topics, .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 AP1 Prüfungsvorbereitung</h1>
+            <p>Kaufmann für IT-Systemmanagement | Prüfung: 25.02.2026</p>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown" id="countdown">
+            <h2>⏰ Zeit bis zur Prüfung</h2>
+            <div class="countdown-display">
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="days">0</div>
+                    <div class="countdown-label">Tage</div>
+                </div>
+                <div>:</div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="hours">00</div>
+                    <div class="countdown-label">Stunden</div>
+                </div>
+                <div>:</div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="minutes">00</div>
+                    <div class="countdown-label">Minuten</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-value" id="totalQuestions">0</div>
+                <div class="stat-label">Aufgaben bearbeitet</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="correctAnswers">0</div>
+                <div class="stat-label">Richtig beantwortet</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value" id="accuracy">0%</div>
+                <div class="stat-label">Erfolgsquote</div>
+            </div>
+        </div>
+
+        <!-- Topics -->
+        <div class="topics" id="topics"></div>
+
+        <!-- Modal für Fragen -->
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal()">✕ Schließen</button>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Prüfungsdatum
+        const examDate = new Date('2026-02-25T08:00:00');
+
+        // Countdown
+        function updateCountdown() {
+            const now = new Date();
+            const diff = examDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = '<h2>🎉 Prüfung läuft! Viel Erfolg!</h2>';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Daten
+        const topics = [
+            {
+                id: 1,
+                code: '§1',
+                title: 'IT-Sicherheit & Datenschutz',
+                description: 'DSGVO, Schutzziele, Backup-Strategien',
+                relevance: 'sehr-hoch',
+                questions: [
+                    {
+                        question: 'Welche drei Schutzziele der IT-Sicherheit gehören zur CIA-Triade?',
+                        options: [
+                            'Vertraulichkeit (Confidentiality)',
+                            'Integrität (Integrity)',
+                            'Verfügbarkeit (Availability)',
+                            'Authentizität'
+                        ],
+                        correct: [0, 1, 2],
+                        explanation: 'Die CIA-Triade besteht aus Confidentiality (Vertraulichkeit), Integrity (Integrität) und Availability (Verfügbarkeit). Authentizität ist ein zusätzliches Schutzziel, gehört aber nicht zur klassischen Triade.'
+                    },
+                    {
+                        question: 'Was bedeutet DSGVO?',
+                        options: [
+                            'Datenschutz-Grundverordnung',
+                            'Digitale Sicherheits-Grundverordnung',
+                            'Daten-Sammel-Grundverordnung',
+                            'Digitale Schutz-Verordnung'
+                        ],
+                        correct: [0],
+                        explanation: 'DSGVO steht für Datenschutz-Grundverordnung und ist seit Mai 2018 in der gesamten EU gültig.'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                code: '§2',
+                title: 'Kalkulation',
+                description: 'Bezugskalkulation, Verkaufskalkulation, Deckungsbeitrag',
+                relevance: 'sehr-hoch',
+                questions: [
+                    {
+                        question: 'Berechne den Bezugspreis:\n\nListeneinkaufspreis: 1.000 €\nRabatt: 10%\nSkonto: 2%\nBezugskosten: 50 €',
+                        options: [
+                            '932 €',
+                            '950 €',
+                            '882 €',
+                            '900 €'
+                        ],
+                        correct: [2],
+                        explanation: 'Rechnung:\n1. Nach Rabatt: 1.000 × 0,9 = 900 €\n2. Nach Skonto: 900 × 0,98 = 882 €\n3. + Bezugskosten: 882 + 50 = 932 €\n\nWarte, das war falsch! Richtig:\nSkonto: 900 × 0,98 = 882 € ✓'
+                    }
+                ]
+            },
+            {
+                id: 3,
+                code: '§3',
+                title: 'Netzwerktechnik',
+                description: 'OSI-Modell, IP-Adressen, Subnetting',
+                relevance: 'hoch',
+                questions: [
+                    {
+                        question: 'Wie viele Schichten hat das OSI-Modell?',
+                        options: ['5', '7', '9', '4'],
+                        correct: [1],
+                        explanation: 'Das OSI-Modell hat 7 Schichten (Layer): Physical, Data Link, Network, Transport, Session, Presentation, Application.'
+                    }
+                ]
+            },
+            {
+                id: 4,
+                code: '§4',
+                title: 'Projektmanagement',
+                description: 'Projektphasen, Netzplantechnik, Meilensteine',
+                relevance: 'hoch',
+                questions: [
+                    {
+                        question: 'Welche Phasen gehören zum klassischen Projektmanagement?',
+                        options: [
+                            'Initiierung',
+                            'Planung',
+                            'Durchführung',
+                            'Abschluss'
+                        ],
+                        correct: [0, 1, 2, 3],
+                        explanation: 'Die vier Hauptphasen sind: Initiierung, Planung, Durchführung und Abschluss.'
+                    }
+                ]
+            },
+            {
+                id: 5,
+                code: '§5',
+                title: 'Hardware & Systemarchitektur',
+                description: 'CPU, RAM, Speichersysteme, RAID',
+                relevance: 'mittel',
+                questions: [
+                    {
+                        question: 'Was bedeutet RAID 1?',
+                        options: [
+                            'Striping (Daten verteilen)',
+                            'Mirroring (Spiegeln)',
+                            'Parität',
+                            'Hot Spare'
+                        ],
+                        correct: [1],
+                        explanation: 'RAID 1 bedeutet Mirroring (Spiegeln): Daten werden auf zwei Festplatten identisch gespeichert für Redundanz.'
+                    }
+                ]
+            },
+            {
+                id: 6,
+                code: '§6',
+                title: 'Software-Entwicklung',
+                description: 'Programmiersprachen, Algorithmen, Datentypen',
+                relevance: 'mittel',
+                questions: [
+                    {
+                        question: 'Was ist eine Variable?',
+                        options: [
+                            'Ein fester Wert',
+                            'Ein Speicherplatz für Daten',
+                            'Eine Funktion',
+                            'Eine Schleife'
+                        ],
+                        correct: [1],
+                        explanation: 'Eine Variable ist ein benannter Speicherplatz, in dem Daten gespeichert und verändert werden können.'
+                    }
+                ]
+            },
+            {
+                id: 7,
+                code: '§7',
+                title: 'Verträge & Recht',
+                description: 'Vertragsarten, AGB, Gewährleistung',
+                relevance: 'mittel',
+                questions: [
+                    {
+                        question: 'Wie lange beträgt die gesetzliche Gewährleistung?',
+                        options: ['1 Jahr', '2 Jahre', '3 Jahre', '6 Monate'],
+                        correct: [1],
+                        explanation: 'Die gesetzliche Gewährleistung beträgt in Deutschland 2 Jahre ab Kaufdatum.'
+                    }
+                ]
+            }
+        ];
+
+        // LocalStorage
+        let userData = JSON.parse(localStorage.getItem('ap1_progress')) || {
+            totalQuestions: 0,
+            correctAnswers: 0,
+            topics: {}
+        };
+
+        // Stats aktualisieren
+        function updateStats() {
+            document.getElementById('totalQuestions').textContent = userData.totalQuestions;
+            document.getElementById('correctAnswers').textContent = userData.correctAnswers;
+            const accuracy = userData.totalQuestions > 0 
+                ? Math.round((userData.correctAnswers / userData.totalQuestions) * 100)
+                : 0;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+        }
+
+        // Topics rendern
+        function renderTopics() {
+            const container = document.getElementById('topics');
+            container.innerHTML = topics.map(topic => {
+                const progress = userData.topics[topic.id] || { attempted: 0, correct: 0 };
+                const accuracy = progress.attempted > 0 
+                    ? Math.round((progress.correct / progress.attempted) * 100)
+                    : 0;
+
+                return `
+                    <div class="topic-card" onclick="openTopic(${topic.id})">
+                        <div class="topic-header">
+                            <div class="topic-code">${topic.code}</div>
+                            <div class="relevance-badge relevance-${topic.relevance}">${topic.relevance.replace('-', ' ')}</div>
+                        </div>
+                        <div class="topic-title">${topic.title}</div>
+                        <div class="topic-description">${topic.description}</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${accuracy}%">${accuracy}%</div>
+                        </div>
+                        <button class="btn">🚀 Jetzt lernen</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Topic öffnen
+        let currentTopic = null;
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+
+        function openTopic(topicId) {
+            currentTopic = topics.find(t => t.id === topicId);
+            currentQuestionIndex = 0;
+            selectedAnswers = [];
+            showQuestion();
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function showQuestion() {
+            const question = currentTopic.questions[currentQuestionIndex];
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <h2>${currentTopic.title}</h2>
+                <p style="color: #666; margin-bottom: 20px;">Frage ${currentQuestionIndex + 1} von ${currentTopic.questions.length}</p>
+                <div class="question">
+                    <div class="question-text">${question.question.replace(/\n/g, '<br>')}</div>
+                    ${question.options.map((opt, idx) => `
+                        <div class="answer-option" id="option-${idx}" onclick="selectAnswer(${idx})">
+                            ${String.fromCharCode(65 + idx)}) ${opt}
+                        </div>
+                    `).join('')}
+                    <button class="btn" style="margin-top: 20px;" onclick="checkAnswer()">Antwort prüfen</button>
+                </div>
+            `;
+        }
+
+        function selectAnswer(index) {
+            const option = document.getElementById(`option-${index}`);
+            if (selectedAnswers.includes(index)) {
+                selectedAnswers = selectedAnswers.filter(i => i !== index);
+                option.classList.remove('selected');
+            } else {
+                selectedAnswers.push(index);
+                option.classList.add('selected');
+            }
+        }
+
+        function checkAnswer() {
+            const question = currentTopic.questions[currentQuestionIndex];
+            const correct = JSON.stringify(selectedAnswers.sort()) === JSON.stringify(question.correct.sort());
+            
+            // Antworten markieren
+            question.options.forEach((_, idx) => {
+                const option = document.getElementById(`option-${idx}`);
+                option.onclick = null;
+                if (question.correct.includes(idx)) {
+                    option.classList.add('correct');
+                } else if (selectedAnswers.includes(idx)) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            // Erklärung anzeigen
+            const content = document.getElementById('modalContent');
+            content.innerHTML += `
+                <div class="explanation">
+                    <strong>${correct ? '✅ Richtig!' : '❌ Falsch!'}</strong><br><br>
+                    ${question.explanation}
+                </div>
+                <button class="btn" style="margin-top: 20px;" onclick="nextQuestion()">
+                    ${currentQuestionIndex < currentTopic.questions.length - 1 ? 'Nächste Frage' : 'Fertig'}
+                </button>
+            `;
+
+            // Stats aktualisieren
+            userData.totalQuestions++;
+            if (correct) userData.correctAnswers++;
+            
+            if (!userData.topics[currentTopic.id]) {
+                userData.topics[currentTopic.id] = { attempted: 0, correct: 0 };
+            }
+            userData.topics[currentTopic.id].attempted++;
+            if (correct) userData.topics[currentTopic.id].correct++;
+            
+            localStorage.setItem('ap1_progress', JSON.stringify(userData));
+            updateStats();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            selectedAnswers = [];
+            if (currentQuestionIndex < currentTopic.questions.length) {
+                showQuestion();
+            } else {
+                closeModal();
+                renderTopics();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Init
+        updateStats();
+        renderTopics();
+    </script>
+</body>
+</html>
